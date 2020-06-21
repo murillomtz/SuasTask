@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+     <New id="myApplicationDs" class="org.eclipse.jetty.plus.jndi.Resource">
+         <Arg></Arg>
+         <Arg>jdbc/tarefasDS</Arg>
+         <Arg>
+             <New class="org.hsqldb.jdbc.JDBCDataSource">
+				 <Set name="DatabaseName">file:database/banco</Set>   
+				 <!-- <Set name="DatabaseName">hsql://localhost/bancoserver</Set>-->
+                 <Set name="User">SA</Set>
+                 <Set name="Password">senha</Set>
+             </New>
+         </Arg>
+     </New>
+     <Set name="handler">
+     <New class="org.eclipse.jetty.server.handler.HandlerList">
+        <Set name="handlers">
+           <Array type="org.eclipse.jetty.server.Handler">
+              <Item>
+                 <New class="org.eclipse.jetty.servlet.ServletContextHandler">
+                    <Set name="contextPath">/static</Set>
+                    <Set name="resourceBase">src/main/webapp/static</Set>
+                    <Call name="addServlet">
+                       <Arg>org.eclipse.jetty.servlet.DefaultServlet</Arg>
+                       <Arg>/</Arg>
+                    </Call>
+                 </New>
+              </Item>
+           </Array>
+        </Set>
+     </New>
+  </Set>
+     
+</Configure>
